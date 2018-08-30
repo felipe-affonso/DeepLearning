@@ -1,88 +1,79 @@
-# Project Title
+# Utilizando uma ANN para saber se os clientes sairão do banco ou não
 
-One Paragraph of project description goes here
+Um banco da Europa deseja saber se os clientes vão fechar as suas contas ou não. Utilizaremos o dataset disponibilizado para tentar realizar essa predição com as técnicas de DeepLearning
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+O importante é saber se a pessoa saiu ou não do banco após um determinado tempo (Coluna "Exited");
 
-### Prerequisites
+Esse conhecimento pode ser usado para detecção de fraude, pagamento, diversas situações.
+Basicamente quando se tem uma serie de características e uma saída binaria.
 
-What things you need to install the software and how to install them
+Usaremos algumas bibliotecas: Theano, Tensorflow e Keras.
 
-```
-Give examples
-```
+Theano: Biblioteca Opensource para calculos matematicos, roda com base em numpy. Pode ser usada para rodas os calculos na GPU tambem. 
 
-### Installing
+Tensorflow: Biblioteca opensource para calculos numéricos. Originalmente feita pelo grupo de pesquisas do google.   
 
-A step by step series of examples that tell you how to get a development env running
+Keras: Feita para deep learning. Permite criar ANN poderosas com poucas linhas. Criada com base em Theano e Tensorflow.
 
-Say what the step will be
+Problema: Classificação
 
-```
-Give the example
-```
+## Parte 1
+## Processamento de dados
 
-And repeat
+Primeiro importamos as bibliotecas
+Depois importamos o dataset.
+Nesse momento devemos analisar quais colunas poderão influenciar a decisão do cliente sair do banco, ou não.
 
-```
-until finished
-```
+As colunas: RowNumber (Numero da linha), CostumerID(Identificação do Cliente)e Surname (Sobrenome) não influenciam a permanencia do cliente no banco.
 
-End with an example of getting some data out of the system or using it for a little demo
+Já, as colunas: CreditScore (nota de credito), Geography (Geografia, país), Gender (Sexo), Age (idade), Tenure (Consultar), Balance (Valor na conta), NumOfProducts(Numero de produtos), hasCreditCard(Possui cartao de credito), IsActiveMember (é um cliente ativo) e  EstimatedSalry (Salario estimado) possuem influencia na permanencia do cliente no banco ou não.
 
-## Running the tests
+O indice das colunas importantes é utilizado para criação da variavél X, que tambem chamaremos de variavies independentes
 
-Explain how to run the automated tests for this system
+Ja o nosso resultado será descrito como Y, que corresponde a 13a coluna do dataset.
 
-### Break down into end to end tests
+O proximo passo seria dividir o dataset entre treino e teste, porém, possuimos algumas variaveis categoricas. Por isso precisamos transforma-las antes de realizarmos a divisao.
 
-Explain what these tests test and why
+Lideremos com os dados: País (Geography) e Sexo (Gender).
 
-```
-Give an example
-```
+Fazemos isso através do labelencoder.
 
-### And coding style tests
+Porém, não existe ligação direta entre a numeração e a importancia do dado, o 2 não é mais importante que o 0, por exemplo. Para isso, nós iremos utilizar o OneHotEncoder. 
 
-Explain what these tests test and why
+Agora estamos prontos pra dividir o dataset em treino e teste.
 
-```
-Give an example
-```
+Posteriormente escalamos todas as variaveis, dessa forma elas ficarão todas com "tamanhos proximos", facilitando as operações que serão realizadas.
 
-## Deployment
+## Parte 2
+## Rede Neural Artificial (ANN)
 
-Add additional notes about how to deploy this on a live system
+Agora começamos a montar a nossa Rede Neural Artificial
+Primeiramente importamos as bibliotecas e módulos que iremos utilizar
 
-## Built With
+Inicializando a rede neural:
+- Devemos criar um classificador, ja que a tarefa é dizer se um conjunto de entradas vai ser classificado como 0 ou 1 (se o cliente sairá do banco ou não).
+- Passamos para a parte das camadas da nossa rede neural. A primeira camada é de entrada de dados. Devemos ter o numero correspondente as variáveis independentes, que, nesse caso, são 11.
+- Adicionaremos mais uma camada escondida.
+- Agora criaremos a camada de saída, que deverá utilizar a ativação do tipo Sigmoid, dessa forma poderemos ter acesso a probabilidade do cliente sair ou não do banco.
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
 
-## Contributing
+A nossa rede ja esta pronta. Precisamos compila-la, ou seja, selecionar os parametros para que os pesos sejam calculados.
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+O proximo passo é fazer o fit, ou seja, aplicar a matriz ao algoritmo que criamos. Nesse momento a rede irá aprender com os dados e parametros que informamos.
+Foram inserido valores para o batch_size e numero de epochs aleatórios, uma vez que queremos mostrar apenas o funcionamento da rede. Esses valores podem ser melhor adaptados para cada situação especifica.
 
-## Versioning
+## Parte 3
+## Utilizando a ANN para fazer predições
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+Utilizando o modelo para fazer predições.
 
-## Authors
+Podemos realizar a predição da mesma forma com que realizamos em qualquer algoritmo de machine learning.
+Nesse momento vemos as probabilidades do cliente sair do banco.
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+Ao transformar os dados para binários, usando um valor de 50%, podemos calcular a acuracidade do modelo com os dados que ele não conhecia.
+Após esse teste o valor alcançado foi de 84% de acerto.
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
 
