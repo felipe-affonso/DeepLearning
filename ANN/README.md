@@ -75,5 +75,26 @@ Nesse momento vemos as probabilidades do cliente sair do banco.
 Ao transformar os dados para binários, usando um valor de 50%, podemos calcular a acuracidade do modelo com os dados que ele não conhecia.
 Após esse teste o valor alcançado foi de 84% de acerto.
 
+## Parte 4
+## Avaliando a ANN
 
+Se o código que desenvolvermos for executado duas vezes, teremos duas accuracys diferentes. Isso mostra que o nosso modelo esta com uma alta variação.
+
+Nessa parte utilizaremos o metodo K-Fold Cross Validation para melhorarmos a performance da nossa ANN.
+
+Precisamos utilizar novas bibliotecas e construir uma função que será utilizada. É possível acompanhar melhor pelo código. 
+
+O importante é entender que no lugar de obter apenas um resultado, iremos obter diversos resultados (10, nesse caso). Com isso, teremos certeza de qual é a precisão do nosso modelo.
+
+### Dropout
+
+O dropout é uma solução pra quando acontece overfitting, ou seja, o modelo estar indo muito bem nos dados de treino, porém muito mal nos dados de teste. Nesse caso, isso nao aconteceu, porém será implementado apenas para aprendizado.
+
+## Parte 5
+## Melhorando os parametros (tunning the ANN)
+
+Ate o momento nós utilizamos parametros pré estabelecidos, porém, não sabemos se eles são os melhores para o nosso cenário. Nessa ultima parte utilizaremos a biblioteca GridSearch para testar diversas configurações e nos retornar quais são os melhores parametros.
+Em específico, testaremos o tamanho do conjunto de dados antes de calcular o erro, o numero de epochs e também o optimizador.
+
+Por fim, o resultado será a melhor configuração para a nossa ANN.
 
