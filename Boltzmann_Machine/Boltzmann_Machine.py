@@ -128,7 +128,21 @@ for epoch in range(1, nb_epoch+1):
     print('epoch: '+str(epoch)+' loss: '+str(train_loss/s))
         
 #testando a RBM
+test_loss = 0
+s = 0.
+for id_user in range (nb_users):
+    v = training_set[id_user:id_user+1]
+    vt = test_set[id_user:id_user+1] 
     
+    #for para os k passos da contrastive divergence
+    if len(vt[vt>=0]) >0:
+         _,h = rbm.sample_h(v) #pega os visibles nodes e calcula os hidden nodes
+         _,v = rbm.sample_v(h) #atualiza os visibles nodes com base nos hidden nodes
+
+    # atualizando o erro
+    test_loss += torch.mean(torch.abs(vt[vt>=0]-v[vt>=0]))
+    s += 1.
+print('test loss: '+str(test_loss/s))
 
 
 
